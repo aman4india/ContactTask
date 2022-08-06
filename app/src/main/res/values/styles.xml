@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="CustomProgressTheme" parent="android:Widget.Holo.ProgressBar.Small">
+        <item name="android:windowBackground">@color/dark_slate_grey</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+</resources>
