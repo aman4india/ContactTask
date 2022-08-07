@@ -9,5 +9,11 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="dark_slate_grey">#404A4D4D</color>
+    <color name="blue">#19407C</color>
+    <color name="toolbar_background">#F26522</color>
+    <color name="text_color">#1d1d1d</color>
+    <color name="light_gray">#E2FFFFFF</color>
+    <color name="light_black">#cecece</color>
+
 
 </resources>

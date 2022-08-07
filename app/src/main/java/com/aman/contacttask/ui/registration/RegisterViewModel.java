@@ -1,4 +1,12 @@
 package com.aman.contacttask.ui.registration;
 
-public class RegisterViewModel {
+import android.app.Application;
+
+import com.aman.contacttask.BaseViewModel;
+
+public class RegisterViewModel extends BaseViewModel {
+
+    public RegisterViewModel(Application application) {
+        super(application);
+    }
 }

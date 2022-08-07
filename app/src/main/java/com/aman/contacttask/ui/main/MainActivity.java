@@ -4,16 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 
-import com.aman.contacttask.R;
 import com.aman.contacttask.databinding.ActivityMainBinding;
 import com.aman.contacttask.models.Datum;
 import com.aman.contacttask.models.UserResponse;
@@ -21,11 +18,12 @@ import com.aman.contacttask.ui.base.BaseActivity;
 import com.aman.contacttask.ui.details.DetailsActivity;
 import com.aman.contacttask.ui.registration.RegisterActivity;
 
+import java.util.ArrayList;
+
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> implements UserRecyclerAdapter.UserListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     UserRecyclerAdapter recyclerAdapter;
-    MainViewModel viewModel;
 
     @androidx.annotation.NonNull
     @Override
@@ -35,6 +33,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         viewModel.getErrorMutableLiveData().observe(this, new ErrorMutable());
         showProgress(this);
         viewModel.getUser(this);
+        recyclerAdapter = new UserRecyclerAdapter(MainActivity.this, new ArrayList<>());
+        viewModel.setRecyclerAdapter(recyclerAdapter);
         return viewModel;
     }
 
@@ -46,34 +46,23 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        binding.toolbar.imageButtonBack.setVisibility(View.GONE);
+        binding.toolbar.imageAdd.setVisibility(View.VISIBLE);
+        binding.toolbar.imageAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, RegisterActivity.class));
+            }
+        });
 
     }
 
 
     @Override
     public void onUserClicked(Datum userId) {
-        startActivity(new Intent(MainActivity.this, DetailsActivity.class));
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        switch (item.getItemId()) {
-            case R.id.action_add:
-                startActivity(new Intent(this, RegisterActivity.class));
-                return true;
-            case R.id.action_search:
-                Toast.makeText(this, "To be implement...", Toast.LENGTH_SHORT).show();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+        Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
+        intent.putExtra("id", userId.getId());
+        startActivity(new Intent(intent));
     }
 
     public class UserMutableData implements Observer<UserResponse> {

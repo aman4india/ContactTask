@@ -1,5 +1,7 @@
 package com.aman.contacttask.ui.main;
 
+import static com.aman.contacttask.data.services.ServiceGenerator.BASE_URL;
+
 import android.app.Application;
 import android.content.Context;
 import android.util.Log;
@@ -20,6 +22,14 @@ public class MainViewModel extends BaseViewModel {
     private MutableLiveData<UserResponse> userResponseMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<Throwable> errorMutableLiveData = new MutableLiveData<>();
     private UserRecyclerAdapter recyclerAdapter;
+
+    public UserRecyclerAdapter getRecyclerAdapter() {
+        return recyclerAdapter;
+    }
+
+    public void setRecyclerAdapter(UserRecyclerAdapter recyclerAdapter) {
+        this.recyclerAdapter = recyclerAdapter;
+    }
 
     public MainViewModel(Application application) {
         super(application);
@@ -50,28 +60,17 @@ public class MainViewModel extends BaseViewModel {
 
     public void setUserData(List<Datum> data) {
         if (recyclerAdapter != null) {
+            Log.e(TAG, "setUserData: " );
             recyclerAdapter.setItems(data);
             recyclerAdapter.notifyDataSetChanged();
         }
     }
 
-//    private void loadUserList(Context context, UserResponse userResponse) {
-//        recyclerAdapter = new UserRecyclerAdapter(this, userResponse.getData());
-//        setupUser(context, userResponse);
-//        ServiceManager.getInstance().setUserResponse(userResponse);
-//        recyclerAdapter.setItems(ServiceManager.getInstance().getUserResponse().getData());
-//    }
-
     public void getUser(Context context) {
         Log.e(TAG, "getUser: ");
-        ServiceManager.getInstance().getUsers(this, context);
+        ServiceManager.getInstance().getUsers(this, BASE_URL+"api/users");
     }
 
-//    private void setupUser(Context context, UserResponse userResponse) {
-//        List<String> upcList = new ArrayList<>();
-//        Log.e(TAG, "setupUser: " + userResponse.getData().size());
-//        ServiceManager.getInstance().getUsers(this, context);
-//    }
 
 
 }

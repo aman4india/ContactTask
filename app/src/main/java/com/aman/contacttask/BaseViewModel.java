@@ -5,6 +5,8 @@ import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
 
+import com.aman.contacttask.util.LoaderHelper;
+
 public abstract class BaseViewModel extends AndroidViewModel {
 
     protected BaseViewModel(Application application){
