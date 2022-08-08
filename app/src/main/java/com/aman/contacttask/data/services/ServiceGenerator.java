@@ -1,5 +1,6 @@
 package com.aman.contacttask.data.services;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -18,5 +19,8 @@ public class ServiceGenerator {
 
         return retrofit.create(serviceClass);
     }
+
+
+
 
 }
